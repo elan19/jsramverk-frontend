@@ -145,21 +145,22 @@ function renderTicketView(item) {
     fetch("http://localhost:1337/tickets")
         .then((response) => response.json())
         .then((result) => {
-            var lastId = result.data[1] ? result.data[1].id : 0;
+            //var lastId = result.data[1] ? result.data[1].id : 0;
 
-            newTicketId = lastId + 1;
+            var lastId = 0;
 
             let newTicketIdSpan = document.getElementById("new-ticket-id");
 
-            newTicketIdSpan.textContent = newTicketId;
-
             result.data.forEach((ticket) => {
                 let element = document.createElement("div");
+                newTicketId = lastId + 1;
 
-                element.innerHTML = `${ticket.id} - ${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
+                element.innerHTML = `${newTicketId} - ${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
+                lastId = newTicketId;
 
                 oldTickets.appendChild(element);
             });
+            newTicketIdSpan.textContent = lastId + 1;
         });
 
 
