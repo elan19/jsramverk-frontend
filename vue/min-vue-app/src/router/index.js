@@ -5,6 +5,7 @@ import DelayedTrainView from '@/views/DelayedTrainView'
 import CreateTicketView from '@/views/CreateTicketView'
 // import NavBar from '@/components/NavBar';
 // import CreateTicket from '@/components/TrainTest';
+// import Map from '@/components/Map';
 
 const routes = [
     {
