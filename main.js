@@ -1,4 +1,8 @@
-function renderMainView() {
+import train from "./vue/min-vue-app/src/models/train.js";
+
+async function renderMainView() {
+    // import train from "vue/min-vue-app/src/models/train.js";
+
     let container = document.getElementById("container");
 
     while (container.firstChild) {
@@ -37,11 +41,11 @@ function renderMainView() {
 
     let delayed = document.getElementById("delayed-trains");
 
-    fetch("http://localhost:1337/delayed")
-        .then((response) => response.json())
-        .then(function(result) {
-            return renderDelayedTable(result.data, delayed);
-        });
+    //Request models imported
+
+    let res = await train.getDelayed();
+    renderDelayedTable(res, delayed);
+
 }
 
 function renderDelayedTable(data, table) {
@@ -60,7 +64,7 @@ function renderDelayedTable(data, table) {
                 ${outputDelay(item)}
             </div>`;
 
-        element.addEventListener("click", function() {
+        element.addEventListener("click", function () {
             renderTicketView(item);
         });
 
@@ -77,7 +81,7 @@ function outputDelay(item) {
     return Math.floor(diff / (1000 * 60)) + " minuter";
 }
 
-function renderTicketView(item) {
+async function renderTicketView(item) {
     let container = document.getElementById("container");
     let newTicketId = 0;
 
@@ -87,7 +91,7 @@ function renderTicketView(item) {
 
     var locationString = "";
     if (item.FromLocation) {
-         locationString = `<h3>Tåg från ${item.FromLocation[0].LocationName} till ${item.ToLocation[0].LocationName}. Just nu i ${item.LocationSignature}.</h3>`;
+        locationString = `<h3>Tåg från ${item.FromLocation[0].LocationName} till ${item.ToLocation[0].LocationName}. Just nu i ${item.LocationSignature}.</h3>`;
     }
 
     container.innerHTML = `<div class="ticket-container">
@@ -114,13 +118,13 @@ function renderTicketView(item) {
     let newTicketForm = document.getElementById("new-ticket-form");
     let oldTickets = document.getElementById("old-tickets");
 
-    backButton.addEventListener("click", function(event) {
+    backButton.addEventListener("click", function (event) {
         event.preventDefault();
 
         renderMainView();
     });
 
-    newTicketForm.addEventListener("submit", function(event) {
+    newTicketForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         var newTicket = {
@@ -128,56 +132,37 @@ function renderTicketView(item) {
             trainnumber: item.OperationalTrainNumber,
             traindate: item.EstimatedTimeAtLocation.substring(0, 10),
         };
-
-        fetch("http://localhost:1337/tickets", {
-            body: JSON.stringify(newTicket),
-            headers: {
-              'content-type': 'application/json'
-            },
-            method: 'POST'
-        })
-            .then((response) => response.json())
-            .then((result) => {
-                renderTicketView(item);
-            });
+        //Request models imported
+        let response = await train.createTicket(newTicket);
+        renderTicketView(item);
     });
 
-    fetch("http://localhost:1337/tickets")
-        .then((response) => response.json())
-        .then((result) => {
-            //var lastId = result.data[1] ? result.data[1].id : 0;
+    //Request models imported
+    const tickets = await train.getTickets();
 
-            var lastId = 0;
+    var lastId = 0
+    let newTicketIdSpan = document.getElementById("new-ticket-id");
+    tickets.data.forEach((ticket) => {
+        let element = document.createElement("div");
+        newTicketId = lastId + 1;
 
-            let newTicketIdSpan = document.getElementById("new-ticket-id");
+        element.innerHTML = `${newTicketId} - ${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
+        lastId = newTicketId;
 
-            result.data.forEach((ticket) => {
-                let element = document.createElement("div");
-                newTicketId = lastId + 1;
+        oldTickets.appendChild(element);
+    });
+    newTicketIdSpan.textContent = lastId + 1;
 
-                element.innerHTML = `${newTicketId} - ${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
-                lastId = newTicketId;
+    //Request models imported
+    let codes = await train.getCodes();
+    codes.data.forEach((code) => {
+        let element = document.createElement("option");
 
-                oldTickets.appendChild(element);
-            });
-            newTicketIdSpan.textContent = lastId + 1;
-        });
+        element.textContent = `${code.Code} - ${code.Level3Description}`;
+        element.value = code.Code;
 
-
-
-    fetch("http://localhost:1337/codes")
-        .then((response) => response.json())
-        .then((result) => {
-            result.data.forEach((code) => {
-                let element = document.createElement("option");
-
-                element.textContent = `${code.Code} - ${code.Level3Description}`;
-                element.value = code.Code;
-
-                reasonCodeSelect.appendChild(element);
-            });
-        });
-
+        reasonCodeSelect.appendChild(element);
+    });
 
 }
 
