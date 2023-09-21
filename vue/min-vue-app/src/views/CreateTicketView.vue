@@ -5,6 +5,7 @@
 
 <script>
 import CreateTicket from '../components/CreateTicket'
+// import { useRoute } from 'vue-router';
 
 export default {
 
@@ -12,9 +13,19 @@ export default {
     props: {},
     components: {
         CreateTicket,
+    },
+    mounted() {
+        const route = this.$route.params;
+
+        console.log(route);
     }
 }
 
 </script>
 
-<style></style>
+<style>
+.delayed-trains {
+    display: flex;
+    flex-direction: column;
+}
+</style>
