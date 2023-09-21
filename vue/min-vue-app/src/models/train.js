@@ -30,7 +30,7 @@ const train = {
             method: 'POST'
         });
 
-        let result = await response.json();
+        // let result = await response.json();
         return response;
     },
 

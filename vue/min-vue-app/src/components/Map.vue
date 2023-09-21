@@ -52,8 +52,8 @@ export default {
 <style>
 /* Add CSS styles for your map container here */
 .map {
-  height: 80vh;
-  width: 50%;
+  height: 100vh;
+  width: 60vw;
 }
 </style>
   
