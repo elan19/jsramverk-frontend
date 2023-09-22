@@ -34,7 +34,7 @@ nav {
     justify-content: flex-start;
     align-items: center;
     gap: 2em;
-    margin: 0 10vw;
+    margin: 0 0;
 }
 
 .nav-container a {
@@ -57,5 +57,6 @@ nav {
     list-style-type: none;
     height: 100%;
     width: 10vh;
+    margin-left: 10vw;
 }
 </style>
