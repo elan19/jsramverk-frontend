@@ -14,7 +14,7 @@ const routes = [
         component: DelayedTrainView
     },
     {
-        path: '/create-ticket/:number',
+        path: '/create-ticket/',
         name: 'CreateTicket',
         component: CreateTicketView
     }

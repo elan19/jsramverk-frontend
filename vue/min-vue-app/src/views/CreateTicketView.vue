@@ -13,11 +13,6 @@ export default {
     props: {},
     components: {
         CreateTicket,
-    },
-    mounted() {
-        const route = this.$route.params;
-
-        console.log(route);
     }
 }
 
