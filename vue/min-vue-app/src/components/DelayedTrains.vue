@@ -14,6 +14,7 @@ import train from '../models/train.js';
 
 export default {
     name: 'DelayedTrains',
+
     mounted() {
         //Router for redirect to new route
         const router = this.$router
@@ -39,7 +40,8 @@ export default {
                 </div>`;
                 //ADD REDIRECT TO VIEW FOR THAT TICKET
                 element.addEventListener("click", function () {
-                    router.push({ path: `/create-ticket/${item.OperationalTrainNumber}` });
+                    const encodedData = encodeURIComponent(JSON.stringify(item))
+                    router.push({ path: `/create-ticket/`, query: { data: encodedData } });
                 });
 
                 delayed.appendChild(element);
