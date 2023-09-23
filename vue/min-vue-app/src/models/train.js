@@ -1,16 +1,16 @@
 const train = {
     getDelayed: async function getDelayed() {
-        const response = await fetch("http://localhost:1337/delayed");
+        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/delayed");
         let result = await response.json();
         return result.data;
     },
     getTickets: async function getTickets() {
-        const response = await fetch("http://localhost:1337/tickets");
+        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/tickets");
         const result = await response.json();
         return result;
     },
     getCodes: async function getCodes() {
-        const response = await fetch("http://localhost:1337/codes");
+        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/codes");
         const result = await response.json();
         return result;
     },
@@ -22,7 +22,7 @@ const train = {
         //     trainnumber: item.OperationalTrainNumber,
         //     traindate: item.EstimatedTimeAtLocation.substring(0, 10),
         // };
-        let response = await fetch("http://localhost:1337/tickets", {
+        let response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/tickets", {
             body: JSON.stringify(newTicket),
             headers: {
                 'content-type': 'application/json'
