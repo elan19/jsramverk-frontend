@@ -17,6 +17,11 @@ const routes = [
         path: '/create-ticket/',
         name: 'CreateTicket',
         component: CreateTicketView
+    },
+    {
+        path: '/~elan19/editor/',
+        name: 'StartView',
+        component: DelayedTrainView
     }
 ];
 
