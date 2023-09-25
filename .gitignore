@@ -1,0 +1,4 @@
+vue/min-vue-app/node_modules/
+.env
+*.sqlite
+coverage/

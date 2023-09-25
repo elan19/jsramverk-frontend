@@ -21,7 +21,10 @@ export default {
       shadowUrl: require('leaflet/dist/images/marker-shadow.png')
     });
 
-    const socket = io("https://jsramverk-train-elan19.azurewebsites.net");
+    let socket = io("https://jsramverk-train-elan19.azurewebsites.net");
+    if (process.env.NODE_ENV !== "production") {
+      socket = io("http://localhost:1337");
+    }
     // Create a map instance and set its view to a specific location and zoom level
     const map = L.map('map').setView([62.173276, 14.942265], 5);
 

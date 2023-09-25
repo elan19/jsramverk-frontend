@@ -1,16 +1,30 @@
+
 const train = {
+    checkUrl: function checkUrl() {
+        let path = "";
+        if (process.env.NODE_ENV !== "production") {
+            path = "http://localhost:1337/";
+        } else {
+            path = "https://jsramverk-train-elan19.azurewebsites.net/";
+        }
+
+        return path
+    },
     getDelayed: async function getDelayed() {
-        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/delayed");
+        const response = await fetch(this.checkUrl() + "delayed");
+
         let result = await response.json();
         return result.data;
     },
     getTickets: async function getTickets() {
-        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/tickets");
+        const response = await fetch(this.checkUrl() + "tickets");
+
         const result = await response.json();
         return result;
     },
     getCodes: async function getCodes() {
-        const response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/codes");
+        const response = await fetch(this.checkUrl() + "codes");
+
         const result = await response.json();
         return result;
     },
@@ -22,7 +36,8 @@ const train = {
         //     trainnumber: item.OperationalTrainNumber,
         //     traindate: item.EstimatedTimeAtLocation.substring(0, 10),
         // };
-        let response = await fetch("https://jsramverk-train-elan19.azurewebsites.net/tickets", {
+        console.log(this.checkUrl())
+        let response = await fetch(this.checkUrl() + "tickets", {
             body: JSON.stringify(newTicket),
             headers: {
                 'content-type': 'application/json'

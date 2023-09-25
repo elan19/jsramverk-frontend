@@ -70,7 +70,7 @@ export default {
             text.innerHTML = "Befintliga ärenden"
             oldTickets.appendChild(text);
             const tickets = await train.getTickets();
-
+            console.log(tickets);
 
             tickets.data.forEach((ticket) => {
                 let element = document.createElement("div");
