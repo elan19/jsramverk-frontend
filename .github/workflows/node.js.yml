@@ -29,11 +29,11 @@ jobs:
       with:
         mongodb-version: ${{ matrix.mongodb-version }}
 
-    - run: cd ./vue/min-vue-app
     - run: npm install
 
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run test
+      working-directory: ./vue/min-vue-app/
       env:
           CI: true
