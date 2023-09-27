@@ -1,7 +1,9 @@
 <template>
-    <div class="container" id="container">
+    <div id='container' class='container'>
         <DelayedTrains />
+
         <Map />
+
     </div>
 </template>
 
@@ -10,14 +12,12 @@ import Map from '../components/Map.vue';
 import DelayedTrains from '../components/DelayedTrains.vue';
 
 export default {
-    name: "DelayedView",
+    name: 'DelayedView',
     components: {
         Map,
-        DelayedTrains,
-    },
-    props: {}
+        DelayedTrains
+    }
 }
-
 </script>
 
 <style>

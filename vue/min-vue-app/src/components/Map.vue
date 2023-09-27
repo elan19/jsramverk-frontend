@@ -1,32 +1,35 @@
 <template>
   <div id="map" class="map"></div>
 </template>
-  
+
 <script>
+
 import L from 'leaflet';
 import { io } from "socket.io-client";
 import { Icon } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+delete Icon.Default.prototype._getIconUrl;
+
+Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow
+});
 
 export default {
-  name: 'Map-comp',
+  name: 'Map-component',
   mounted() {
-
-    // this part resolve an issue where the markers would not appear
-    delete Icon.Default.prototype._getIconUrl;
-
-    Icon.Default.mergeOptions({
-      iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-      iconUrl: require('leaflet/dist/images/marker-icon.png'),
-      shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-    });
-
     let socket = io("https://jsramverk-train-elan19.azurewebsites.net");
     if (process.env.NODE_ENV !== "production") {
       socket = io("http://localhost:1337");
     }
     // Create a map instance and set its view to a specific location and zoom level
-    const map = L.map('map').setView([62.173276, 14.942265], 5);
+    let mapcomp = document.getElementById("map");
+    const map = L.map(mapcomp).setView([62.173276, 14.942265], 5);
 
     // Add a tile layer (e.g., OpenStreetMap)
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -47,16 +50,13 @@ export default {
         markers[data.trainnumber] = marker
       }
     });
-
   },
 };
 </script>
-  
+
 <style>
-/* Add CSS styles for your map container here */
 .map {
   height: 100vh;
   width: 60vw;
 }
 </style>
-  
