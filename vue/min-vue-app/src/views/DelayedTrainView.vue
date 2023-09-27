@@ -1,9 +1,7 @@
 <template>
     <div id='container' class='container'>
         <DelayedTrains />
-
         <Map />
-
     </div>
 </template>
 

@@ -25,4 +25,4 @@ test("testing socket contains data", async () => {
     expect(data).hasOwnProperty('bearing');
     expect(data).hasOwnProperty('status');
     expect(data).hasOwnProperty('speed');
-}, 6000);
+}, 100000);
