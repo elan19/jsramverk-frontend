@@ -22,12 +22,14 @@ Icon.Default.mergeOptions({
 
 export default {
   name: 'Map-component',
+  beforeCreate() {
+    let mapcomp = document.createElement("div");
+    mapcomp.id = "map";
+    mapcomp.className = "map";
+    document.body.appendChild(mapcomp);
+  },
   mounted() {
-    let socket = io("https://jsramverk-train-elan19.azurewebsites.net");
-    if (process.env.NODE_ENV !== "production") {
-      socket = io("http://localhost:1337");
-    }
-    // Create a map instance and set its view to a specific location and zoom level
+
     let mapcomp = document.getElementById("map");
     const map = L.map(mapcomp).setView([62.173276, 14.942265], 5);
 
@@ -37,6 +39,10 @@ export default {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    let socket = io("https://jsramverk-train-elan19.azurewebsites.net");
+    if (process.env.NODE_ENV !== "production") {
+      socket = io("http://localhost:1337");
+    }
     let markers = {};
 
     socket.on("message", (data) => {

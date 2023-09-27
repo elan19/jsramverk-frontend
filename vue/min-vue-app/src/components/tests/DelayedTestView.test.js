@@ -9,9 +9,8 @@ test("Testing view contains map and delayedtrains", async () => {
     const map = wrapper.findComponent(Map);
     expect(map.exists()).toBe(true);
     const mapByName = wrapper.findComponent({ name: 'Map' });
-    wrapper.unmount();
-    //Testing second component
-    // const delayedtrains = wrapper.findComponent(DelayedTrains);
-    // expect(delayedtrains.exists()).toBe(true);
-    // const delayedTrainsByName = wrapper.findComponent({ name: 'DelayedTrains' });
+    // Testing second component
+    const delayedtrains = wrapper.findComponent(DelayedTrains);
+    expect(delayedtrains.exists()).toBe(true);
+    const delayedTrainsByName = wrapper.findComponent({ name: 'DelayedTrains' });
 })
