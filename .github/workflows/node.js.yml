@@ -34,8 +34,10 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      working-directory: ./vue/min-vue-app
 
     - name: Run tests
       run: npm run test
+      working-directory: ./vue/min-vue-app
       env:
         CI: true
