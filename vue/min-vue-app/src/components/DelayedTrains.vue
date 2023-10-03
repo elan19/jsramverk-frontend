@@ -1,64 +1,32 @@
 <template>
-    <div id="delayed" class="delayed">
+    <div class="delayed">
         <h1>Alla försenade tåg</h1>
-        <div id="delayed-trains"></div>
+        <div class="delayed-trains">
+            <OneDelayed v-for="(data, index) in asyncData" :key="index" :asyncData="data" />
+        </div>
     </div>
 </template>
 
 
 <script>
+import OneDelayed from './OneDelayed.vue';
+import { ref, onMounted } from 'vue';
 
 import train from '../models/train.js';
-// const router = this.router;
-
 
 export default {
+    setup() {
+        const asyncData = ref(null);
+
+        onMounted(async () => {
+            asyncData.value = await train.getDelayed();
+        });
+        return {
+            asyncData,
+        };
+    },
+    components: { OneDelayed },
     name: 'DelayedTrains',
-
-    mounted() {
-        //Router for redirect to new route
-        const router = this.$router
-
-        async function createDelayed() {
-            let data = await train.getDelayed();
-            let delayed = document.getElementById("delayed-trains");
-
-            data.forEach((item) => {
-                let element = document.createElement("div");
-                element.className = "one-delay"
-
-                element.innerHTML = `
-                <div class="train-number">
-                    ${item.OperationalTrainNumber}
-                </div>
-                <div class="current-station">
-                    <div>${item.LocationSignature}</div>
-                    <div>${item.FromLocation ? item.FromLocation[0].LocationName + " -> " : ""} ${item.ToLocation ? item.ToLocation[0].LocationName : ""}</div>
-                </div>
-                <div class="delay">
-                    ${outputDelay(item)}
-                </div>`;
-                //ADD REDIRECT TO VIEW FOR THAT TICKET
-                element.addEventListener("click", function () {
-                    const encodedData = encodeURIComponent(JSON.stringify(item))
-                    router.push({ path: `/create-ticket/`, query: { data: encodedData } });
-                });
-
-                delayed.appendChild(element);
-            });
-        }
-
-        createDelayed();
-
-        function outputDelay(item) {
-            let advertised = new Date(item.AdvertisedTimeAtLocation);
-            let estimated = new Date(item.EstimatedTimeAtLocation);
-
-            const diff = Math.abs(estimated - advertised);
-
-            return Math.floor(diff / (1000 * 60)) + " minuter";
-        }
-    }
 }
 </script>
 
@@ -80,19 +48,5 @@ export default {
 
 .one-delay:nth-of-type(2n) {
     background-color: #eee;
-}
-
-.train-number {
-    font-size: 2rem;
-    font-weight: bold;
-    width: 30%;
-}
-
-.current-station {
-    width: 30%;
-}
-
-.ticket-container {
-    padding: 2rem;
 }
 </style>

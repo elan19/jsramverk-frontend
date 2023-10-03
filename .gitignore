@@ -1,5 +1,6 @@
 vue/min-vue-app/node_modules/
 vue/node_modules/
+node_modules
 .env
 *.sqlite
 coverage/
