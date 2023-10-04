@@ -3,61 +3,46 @@
 </template>
 
 <script>
-
 import L from 'leaflet';
-import { io } from "socket.io-client";
-import { Icon } from 'leaflet'
+import { onMounted, watch } from "vue";
 import 'leaflet/dist/leaflet.css'
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
-delete Icon.Default.prototype._getIconUrl;
-
-Icon.Default.mergeOptions({
-  iconRetinaUrl: markerIcon2x,
-  iconUrl: markerIcon,
-  shadowUrl: markerShadow
-});
 
 export default {
-  name: 'Map-component',
-  beforeCreate() {
-    let mapcomp = document.createElement("div");
-    mapcomp.id = "map";
-    mapcomp.className = "map";
-    document.body.appendChild(mapcomp);
-  },
-  mounted() {
+  name: 'MapComponent',
+  props: ['markers'],
+  setup(props) {
 
-    let mapcomp = document.getElementById("map");
-    const map = L.map(mapcomp).setView([62.173276, 14.942265], 5);
+    onMounted(() => {
+      let mapcomp = document.getElementById("map");
+      const map = L.map(mapcomp).setView([62.173276, 14.942265], 5);
 
-    // Add a tile layer (e.g., OpenStreetMap)
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+      // Add a tile layer (e.g., OpenStreetMap)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
 
-    let socket = io("https://jsramverk-train-elan19.azurewebsites.net");
-    if (process.env.NODE_ENV !== "production") {
-      socket = io("http://localhost:1337");
-    }
-    let markers = {};
+      let markers = {};
+      watch(() => props.markers, (newMarkers) => {
 
-    socket.on("message", (data) => {
-      if (Object.prototype.hasOwnProperty.call(markers, data.trainnumber)) {
-        let marker = markers[data.trainnumber]
+        if (Object.prototype.hasOwnProperty.call(markers, newMarkers.trainnumber)) {
+          let marker = markers[newMarkers.trainnumber]
 
-        marker.setLatLng(data.position);
-      } else {
-        let marker = L.marker(data.position).bindPopup(data.trainnumber).addTo(map);
+          marker.setLatLng(newMarkers.position);
+        } else {
+          let marker = L.marker(newMarkers.position).bindPopup(newMarkers.trainnumber).addTo(map);
 
-        markers[data.trainnumber] = marker
-      }
+          markers[newMarkers.trainnumber] = marker
+        }
+
+        return {
+          map,
+        };
+      });
     });
+
   },
-};
+}
 </script>
 
 <style>

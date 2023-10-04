@@ -1,11 +1,13 @@
 <template>
     <div id='container' class='container'>
         <DelayedTrains />
-        <Map />
+        <Map :markers="connected" />
     </div>
 </template>
 
 <script>
+import { isProxy, toRaw } from 'vue';
+import { state } from "@/socket";
 import Map from '../components/Map.vue';
 import DelayedTrains from '../components/DelayedTrains.vue';
 
@@ -14,6 +16,13 @@ export default {
     components: {
         Map,
         DelayedTrains
+    },
+    computed: {
+        connected() {
+            isProxy(state.trainData) ? 'yup' : 'nope'
+            const train = toRaw(state.trainData);
+            return train;
+        }
     }
 }
 </script>
