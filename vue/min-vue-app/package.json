@@ -10,6 +10,7 @@
     "deploy": "npm run build && rsync -av --delete dist/ elan19@ssh.student.bth.se:www/editor"
   },
   "dependencies": {
+    "@vue-leaflet/vue-leaflet": "^0.10.1",
     "core-js": "^3.8.3",
     "crypto-browserify": "^3.12.0",
     "dotenv": "^16.3.1",
