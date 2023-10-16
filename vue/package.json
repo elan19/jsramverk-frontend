@@ -16,7 +16,7 @@
     "vue2-leaflet": "^2.7.1"
   },
   "devDependencies": {
-    "happy-dom": "^12.2.0",
-    "vitest": "^0.34.5"
+    "happy-dom": "^12.8.0",
+    "vitest": "^0.34.6"
   }
 }

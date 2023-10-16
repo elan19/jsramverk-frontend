@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Importera dina komponenter här
 import DelayedTrainView from '@/views/DelayedTrainView'
 import CreateTicketView from '@/views/CreateTicketView'
+import DelayedView from '@/views/DelayedView'
+
 // import NavBar from '@/components/NavBar';
 // import CreateTicket from '@/components/TrainTest';
 // import Map from '@/components/Map';
@@ -14,7 +16,7 @@ const routes = [
         component: DelayedTrainView
     },
     {
-        path: '/create-ticket/',
+        path: '/create-ticket/:ticketId',
         name: 'CreateTicket',
         component: CreateTicketView
     },
@@ -22,6 +24,11 @@ const routes = [
         path: '/~elan19/editor/',
         name: 'StartView',
         component: DelayedTrainView
+    },
+    {
+        path: '/delayed',
+        name: 'DelayedView',
+        component: DelayedView
     }
 ];
 

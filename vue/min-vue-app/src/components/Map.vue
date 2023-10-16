@@ -6,13 +6,31 @@
 import L from 'leaflet';
 import { onMounted, watch } from "vue";
 import 'leaflet/dist/leaflet.css'
+import { Icon } from 'leaflet'
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import model from '../models/train.js';
 
+const delayed = await model.getDelayed();
+
+delete Icon.Default.prototype._getIconUrl;
+
+Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow
+});
 export default {
   name: 'MapComponent',
   props: ['markers'],
+  beforeCreate() {
+    let map = document.createElement("div");
+    map.id = "map";
+    document.body.appendChild(map)
+  },
   setup(props) {
-
-    onMounted(() => {
+    onMounted(async () => {
       let mapcomp = document.getElementById("map");
       const map = L.map(mapcomp).setView([62.173276, 14.942265], 5);
 
@@ -24,16 +42,19 @@ export default {
 
       let markers = {};
       watch(() => props.markers, (newMarkers) => {
+        delayed.forEach(delay => {
+          if (newMarkers.trainnumber === delay.OperationalTrainNumber) {
+            if (Object.prototype.hasOwnProperty.call(markers, newMarkers.trainnumber)) {
+              let marker = markers[newMarkers.trainnumber]
 
-        if (Object.prototype.hasOwnProperty.call(markers, newMarkers.trainnumber)) {
-          let marker = markers[newMarkers.trainnumber]
+              marker.setLatLng(newMarkers.position);
+            } else {
+              let marker = L.marker(newMarkers.position).bindPopup(newMarkers.trainnumber).addTo(map);
 
-          marker.setLatLng(newMarkers.position);
-        } else {
-          let marker = L.marker(newMarkers.position).bindPopup(newMarkers.trainnumber).addTo(map);
-
-          markers[newMarkers.trainnumber] = marker
-        }
+              markers[newMarkers.trainnumber] = marker
+            }
+          }
+        });
 
         return {
           map,

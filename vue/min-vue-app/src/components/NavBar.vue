@@ -1,7 +1,8 @@
 <template>
     <nav>
         <ul class="nav-container">
-            <li><router-link to="/">Me</router-link></li>
+            <li><router-link to="/">Hem</router-link></li>
+            <li><router-link to="/delayed">Förseningar</router-link></li>
             <!-- <li><router-link to="/create-ticket">Tåg</router-link></li> -->
         </ul>
     </nav>

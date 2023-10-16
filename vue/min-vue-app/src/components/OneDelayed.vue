@@ -41,7 +41,7 @@ export default {
 
         function redirect() {
             const encodedData = encodeURIComponent(JSON.stringify(props.asyncData));
-            router.push({ path: `/create-ticket/`, query: { data: encodedData } });
+            router.push({ name: 'CreateTicket', params: { ticketId: 'someId' }, query: { data: encodedData } });
         }
 
         return {

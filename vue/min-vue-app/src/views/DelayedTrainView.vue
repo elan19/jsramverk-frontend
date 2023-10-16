@@ -7,7 +7,7 @@
 
 <script>
 import { isProxy, toRaw } from 'vue';
-import { state } from "@/socket";
+import { state } from "../socket.js";
 import Map from '../components/Map.vue';
 import DelayedTrains from '../components/DelayedTrains.vue';
 
@@ -21,6 +21,7 @@ export default {
         connected() {
             isProxy(state.trainData) ? 'yup' : 'nope'
             const train = toRaw(state.trainData);
+            console.log(train);
             return train;
         }
     }

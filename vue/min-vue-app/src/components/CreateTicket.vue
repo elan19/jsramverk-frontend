@@ -2,7 +2,7 @@
     <div class="ticket-container">
         <div class="ticket">
             <a href="" id="back">- Tillbaka</a>
-            <h1>Nytt ärende #<span id="new-ticket-id"></span></h1>
+            <h1>Nytt ärende #{{ item.OperationalTrainNumber }}<span id="new-ticket-id"></span></h1>
             <p id="locationString"></p>
             <h3>{{ locationFromTo }}</h3>
             <p><strong>Försenad:</strong> </p>
@@ -23,7 +23,6 @@
 import train from '@/models/train';
 export default {
     name: 'CreateTicket',
-
     async mounted() {
         const router = this.$router
         const encoded = this.$route.query.data;
@@ -106,7 +105,8 @@ export default {
 
 
         return {
-            locationFromTo: locationString
+            locationFromTo: locationString,
+            item
         }
     }
 }
