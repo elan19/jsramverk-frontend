@@ -21,7 +21,6 @@ export default {
         connected() {
             isProxy(state.trainData) ? 'yup' : 'nope'
             const train = toRaw(state.trainData);
-            console.log(train);
             return train;
         }
     }

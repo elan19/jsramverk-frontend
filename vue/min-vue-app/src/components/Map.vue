@@ -42,18 +42,21 @@ export default {
 
       let markers = {};
       watch(() => props.markers, (newMarkers) => {
-        delayed.forEach(delay => {
+        delayed.every(delay => {
           if (newMarkers.trainnumber === delay.OperationalTrainNumber) {
             if (Object.prototype.hasOwnProperty.call(markers, newMarkers.trainnumber)) {
               let marker = markers[newMarkers.trainnumber]
 
               marker.setLatLng(newMarkers.position);
+              return false
             } else {
               let marker = L.marker(newMarkers.position).bindPopup(newMarkers.trainnumber).addTo(map);
 
               markers[newMarkers.trainnumber] = marker
+              return false
             }
           }
+          return true
         });
 
         return {
