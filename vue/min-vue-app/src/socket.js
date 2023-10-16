@@ -20,6 +20,5 @@ socket.on("disconnect", () => {
 });
 
 socket.on("message", (data) => {
-    //Might need to remove row under
     state.trainData = data
 });
