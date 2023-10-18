@@ -125,9 +125,10 @@ export default {
 <style>
 
 .form-container {
-    width: 50%;
+    width: 40%;
     float: right;
     font-size: 30px;
+    margin-right: 5%;
 }
 
 .form-container input {
@@ -160,7 +161,7 @@ export default {
 
 .old-tickets {
     height: 750px;
-    width: 35%;
+    width: 45%;
     overflow-y: auto;
 }
 
@@ -178,5 +179,9 @@ export default {
 
 .editBtn:hover {
     background-color: grey;
+}
+
+.ticket-container {
+    width: 100%;
 }
 </style>
