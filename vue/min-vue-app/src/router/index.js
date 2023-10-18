@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import DelayedTrainView from '@/views/DelayedTrainView'
 import CreateTicketView from '@/views/CreateTicketView'
 import DelayedView from '@/views/DelayedView'
+import ErrandsView from '@/views/ErrandsView'
 
 // import NavBar from '@/components/NavBar';
 // import CreateTicket from '@/components/TrainTest';
@@ -29,7 +30,12 @@ const routes = [
         path: '/delayed',
         name: 'DelayedView',
         component: DelayedView
-    }
+    },
+    {
+        path: '/errands',
+        name: 'ErrandsView',
+        component: ErrandsView,
+    },
 ];
 
 const router = createRouter({

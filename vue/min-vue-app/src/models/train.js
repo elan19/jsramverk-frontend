@@ -53,6 +53,18 @@ const train = {
         return response;
     },
 
+    updateTicket: async function updateTicket(ticketId, editTicket) {
+        console.log(editTicket);
+        let response = await fetch(this.checkUrl() + "tickets/" + ticketId, {
+            body: JSON.stringify(editTicket),
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'PUT'
+        });
+        return response;
+    },
+
 };
 
 export default train;
