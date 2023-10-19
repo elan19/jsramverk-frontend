@@ -2,7 +2,6 @@
     <nav>
         <ul class="nav-container">
             <li><router-link to="/">Hem</router-link></li>
-            <li><router-link to="/delayed">Förseningar</router-link></li>
             <li><router-link to="/errands">Ärenden</router-link></li>
         </ul>
     </nav>

@@ -26,6 +26,26 @@ const train = {
         const result = await response.json();
         return result;
     },
+    //Implemented path for trains and for ticket
+    graphQL: async function graphQL(uQuery) {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var graphql = JSON.stringify({
+            query: uQuery,
+            variables: {}
+        })
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: graphql,
+            redirect: 'manual'
+        };
+
+        let response = await fetch(this.checkUrl() + "graphql", requestOptions);
+        const result = await response.json();
+        return result
+    },
     getCodes: async function getCodes() {
         const response = await fetch(this.checkUrl() + "codes");
 

@@ -33,7 +33,25 @@ export default {
         let oldTickets = document.getElementById("old-tickets");
         const formContainer = document.getElementById("change-ticket-form");
         formContainer.style.display = "none";
-        const tickets = await train.getTickets();
+
+        // Reformating to match expected struture before graphQL
+        let query = `{
+                tickets
+                {
+                    _id
+                    trainnumber
+                    traindate
+                    code
+                }
+            }`
+        let graphResponse = await train.graphQL(query);
+        graphResponse = graphResponse.data.tickets
+        let tickets = { data: graphResponse };
+
+        // let tickets = await train.getTickets();
+
+        // console.log(ticketss)
+        // console.log(tickets)
 
         await tickets.data.forEach((ticket) => {
             info.ticketsArray.push(ticket);
@@ -63,7 +81,22 @@ export default {
             let text = document.createElement("h2");
             text.innerHTML = "Befintliga ärenden"
             oldTickets.appendChild(text);
-            const tickets = await train.getTickets();
+
+            // Reformating to match expected struture before graphQL
+            let query = `{
+                tickets
+                {
+                    _id
+                    trainnumber
+                    traindate
+                    code
+                }
+            }`
+            let graphResponse = await train.graphQL(query);
+            graphResponse = graphResponse.data.tickets
+            let tickets = { data: graphResponse };
+            // const tickets = await train.getTickets();
+
             console.log(tickets.data[1]._id);
 
             tickets.data.forEach((ticket, index) => {
@@ -71,7 +104,7 @@ export default {
                 let button = document.createElement("button");
                 button.textContent = "Edit";
                 button.addEventListener("click", () => {
-                    selectErrand(index); 
+                    selectErrand(index);
                     formContainer.style.display = "block";
                     const labelOrsakskod = document.getElementById("label-orsakskod");
                     labelOrsakskod.innerHTML = "ID: " + info.selectedErrand + " | Orsakskod - " + ticket.code;
@@ -123,7 +156,6 @@ export default {
 </script>
 
 <style>
-
 .form-container {
     width: 40%;
     float: right;
