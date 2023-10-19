@@ -27,7 +27,6 @@ export default {
         const router = this.$router
         const encoded = this.$route.query.data;
         const item = JSON.parse(decodeURIComponent(encoded))
-
         // var locationString = "";
         // if (item.FromLocation) {
         //     locationString = `<h3>Tåg från ${item.FromLocation[0].LocationName} till ${item.ToLocation[0].LocationName}. Just nu i ${item.LocationSignature}.</h3>`;
@@ -68,10 +67,23 @@ export default {
             let text = document.createElement("h2");
             text.innerHTML = "Befintliga ärenden"
             oldTickets.appendChild(text);
-            const tickets = await train.getTickets();
+
+            let query = `{
+                tickets
+                { 
+                    trainnumber
+                    traindate
+                    code
+                } 
+            }`
+
+            let tickets = await train.graphQL(query);
+            tickets = tickets.data
+            // const tickets = await train.getTickets();
+            // console.log(tickets)
             console.log(tickets);
 
-            tickets.data.forEach((ticket) => {
+            tickets.tickets.forEach((ticket) => {
                 let element = document.createElement("div");
 
                 element.innerHTML = `${ticket.code} - ${ticket.trainnumber} - ${ticket.traindate}`;
@@ -111,3 +123,5 @@ export default {
     }
 }
 </script>
+
+<style></style>

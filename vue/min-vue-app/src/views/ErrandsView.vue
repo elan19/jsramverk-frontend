@@ -10,12 +10,12 @@ import ChangeErrand from '../components/ChangeErrand'
 
 
 export default {
-name: 'ErrandsView',
-props: {},
-components: {
-    ChangeErrand,
-},
-computed: {
+    name: 'ErrandsView',
+    props: {},
+    components: {
+        ChangeErrand,
+    },
+    computed: {
         connected() {
             isProxy(state.trainData) ? 'yup' : 'nope'
             const train = toRaw(state.trainData);
@@ -26,4 +26,3 @@ computed: {
 };
 
 </script>
-  
