@@ -66,7 +66,6 @@ export default {
                 trainnumber: info.editedTicket.trainnumber,
                 traindate: info.editedTicket.traindate,
             };
-            console.log(changeTicket);
             //Request models imported
             await train.updateTicket(tickets.data[info.selectedErrand]._id, changeTicket);
             updateTickets();
@@ -81,6 +80,7 @@ export default {
             let text = document.createElement("h2");
             text.innerHTML = "Befintliga ärenden"
             oldTickets.appendChild(text);
+            const tickets = await train.getTickets();
 
             // Reformating to match expected struture before graphQL
             let query = `{
@@ -130,8 +130,6 @@ export default {
         const selectErrand = (id) => {
             info.selectedErrand = id;
             info.editedTicket = info.ticketsArray[id];
-            console.log(info.selectedErrand);
-            console.log(info.editedTicket.id);
         }
 
         let codes = await train.getCodes();
@@ -148,7 +146,6 @@ export default {
         selectErrand(id) {
             this.selectedErrand = id;
             this.editedTicket = this.ticketsArray.find((ticket) => ticket.id === id);
-            console.log(this.selectedErrand);
         },
     }
 
