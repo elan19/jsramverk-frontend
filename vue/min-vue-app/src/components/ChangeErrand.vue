@@ -80,7 +80,7 @@ export default {
             let text = document.createElement("h2");
             text.innerHTML = "Befintliga ärenden"
             oldTickets.appendChild(text);
-            const tickets = await train.getTickets();
+            // const tickets = await train.getTickets();
 
             // Reformating to match expected struture before graphQL
             let query = `{
