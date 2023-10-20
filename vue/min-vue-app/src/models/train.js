@@ -30,6 +30,7 @@ const train = {
     graphQL: async function graphQL(uQuery) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Accept", 'application/json');
 
         var graphql = JSON.stringify({
             query: uQuery,

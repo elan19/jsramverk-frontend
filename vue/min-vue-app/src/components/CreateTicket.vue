@@ -13,7 +13,7 @@
             </form>
         </div>
         <br>
-        <div class="old-tickets" id="old-tickets">
+        <div class="excisting-tickets" id="old-tickets">
 
         </div>
     </div>
