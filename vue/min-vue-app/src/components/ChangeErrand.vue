@@ -1,5 +1,5 @@
 <template>
-    <div class="ticket-container">
+    <div class="edit-container">
         <div class="form-container">
             <form id="change-ticket-form">
                 <label id="label-orsakskod">Orsakskod</label><br>
@@ -194,6 +194,7 @@ export default {
 .old-tickets {
     height: 750px;
     width: 45%;
+    margin-left: 1em;
     overflow-y: auto;
 }
 
@@ -213,7 +214,8 @@ export default {
     background-color: grey;
 }
 
-.ticket-container {
+.edit-container {
     width: 100%;
+    margin-top: 1em;
 }
 </style>

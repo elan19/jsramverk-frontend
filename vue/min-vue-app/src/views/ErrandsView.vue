@@ -1,5 +1,4 @@
 <template>
-    <h1>Manage Errands</h1>
     <ChangeErrand />
 </template>
   
