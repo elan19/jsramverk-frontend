@@ -23,7 +23,7 @@ Detta avsnitt är avsett för sista delen i kursen som handlar om att vidareutve
 
 De kraven som vi valt att arbeta med är Krav 1, Krav 2 och Krav 5.
 
-#Krav 1 
+# Krav 1 
 
  
 
@@ -31,7 +31,7 @@ För att endast visa försenade tåg och för att enbart visa ett tåg på karta
 
 För att enbart visa en försening med tågnr och dess data, ändrade vi befintlig kod för att lägga till en komponent som enbart visar en försening. Sedan ändrades koden i DelayedTrains komponenten för att använda sig av en loop där den skapar antalet OneDelayed utefter hur mycket data den får tillbaka av getDelayed. Den datan kan man skicka med via properties och då använda mellan komponenterna. Denna struktur gör det möjligt att använda samma komponent för att visa enbart en försening eller flera beroende på vad förälder-komponenten skickar med för data. Denna komponent används i dagsläget enbart i startsidan på vår applikation men det gör det möjligt att skapa fler vyer med samma komponent. 
 
-#Krav 2 
+# Krav 2 
 
  
 
@@ -39,7 +39,7 @@ Göra det möjligt att ändra befintliga ärenden. För att få fram en sida dä
 
 Det kluriga för denna del var att få till det på ett bra sätt med det privata ID:t som alla objekt har, samt att kunna kontrollera det eftersom det är ett ObjectId i mongodb och inte bara en sträng. Det löstes genom att skapa en variabel som fick innehållet av det ID:t som skickades med via parametern, och därefter användes den nyligen skapade variabeln för att jämföras med databasen för att hitta det korrekta objektet som ska ändras. 
 
-#Krav 3 
+# Krav 3 
 
  
 
