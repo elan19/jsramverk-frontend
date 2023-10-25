@@ -5,7 +5,7 @@
             <h1>Nytt ärende #{{ item.OperationalTrainNumber }}<span id="new-ticket-id"></span></h1>
             <p id="locationString"></p>
             <h3>{{ locationFromTo }}</h3>
-            <p><strong>Försenad:</strong> </p>
+            <p><strong>Försenad:</strong>{{ timeDelay }} </p>
             <form id="new-ticket-form">
                 <label>Orsakskod</label><br>
                 <select id="reason-code"></select><br><br>
@@ -107,6 +107,15 @@ export default {
     data() {
         //Sending data to template
 
+        function outputDelay(item) {
+            let advertised = new Date(item.AdvertisedTimeAtLocation);
+            let estimated = new Date(item.EstimatedTimeAtLocation);
+
+            const diff = Math.abs(estimated - advertised);
+
+            return Math.floor(diff / (1000 * 60)) + " minuter";
+        }
+
         const encoded = this.$route.query.data;
         const item = JSON.parse(decodeURIComponent(encoded))
 
@@ -115,10 +124,11 @@ export default {
             locationString = `Tåg från ${item.FromLocation[0].LocationName} till ${item.ToLocation[0].LocationName}. Just nu i ${item.LocationSignature}.`;
         }
 
-
+        const timeDelay = outputDelay(item);
         return {
             locationFromTo: locationString,
-            item
+            item,
+            timeDelay
         }
     }
 }
